@@ -54,11 +54,10 @@ function AppLayout() {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
-
         <Layout style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
             <Sider theme='light' collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div style={{ margin: '15px' }}>
-                    <img src={Logo} alt="Axsoft Development" height={collapsed ? '15px' : '30px'} />
+                    <img src={Logo} alt="Axsoft Development" height={collapsed ? '15px' : '30px'} style={{ transition: 'all 0.2s ease-in-out' }} />
                 </div>
                 <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
             </Sider>
