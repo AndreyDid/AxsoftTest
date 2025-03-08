@@ -9,6 +9,7 @@ import type { MenuProps } from 'antd';
 import { Avatar, Button, Layout, Menu, Space } from 'antd';
 import Logo from '../../assets/logo.png'
 import SearchInput from './SearchInput';
+import PartnersTable from '../PartnersTable';
 const { Header, Content, Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -57,7 +58,7 @@ function AppLayout() {
         <Layout style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
             <Sider theme='light' collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div style={{ margin: '15px' }}>
-                    <img src={Logo} alt="Axsoft Development" height={'30px'} />
+                    <img src={Logo} alt="Axsoft Development" height={collapsed ? '15px' : '30px'} />
                 </div>
                 <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
             </Sider>
@@ -95,8 +96,8 @@ function AppLayout() {
                     <div style={{ borderBottom: '1px solid #e1e1e3' }}>
                         <h3 style={{ margin: 15 }}>Контрагенты</h3>
                     </div>
+                    <PartnersTable />
                 </Content>
-
             </Layout>
         </Layout>
     );

@@ -1,4 +1,4 @@
-import { Flex, Input, Space } from 'antd';
+import { Input, Space } from 'antd';
 import type { GetProps } from 'antd';
 
 type SearchProps = GetProps<typeof Input.Search>;
