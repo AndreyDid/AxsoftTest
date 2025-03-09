@@ -1,0 +1,27 @@
+.ant-btn-color-primary {
+    background-color: #fc9432 !important
+}
+
+.ant-btn-color-primary:hover {
+    background-color: #ff7b00 !important
+}
+
+.ant-radio-button-checked,
+.ant-radio-button-inner,
+.ant-radio-button-inner,
+.ant-radio-button-wrapper-checked,
+.ant-radio-button-input:focus,
+.ant-radio-button-inner {
+    background-color: #f3f5f0 !important;
+    border-color: #ebebeb !important;
+    color: #703beb !important;
+}
+
+.ant-radio:hover,
+.ant-radio-button-wrapper:hover {
+    color: #703beb !important;
+}
+
+.ant-radio-button-wrapper::before {
+    display: none !important;
+}

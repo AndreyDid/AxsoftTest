@@ -13,6 +13,9 @@ function App() {
             cellPaddingBlock: 5,
             cellPaddingInlineMD: 1
           },
+          Modal: {
+            colorBgMask: 'rgba(59, 58, 58, 0.69)',
+          },
         }
       }}
     >

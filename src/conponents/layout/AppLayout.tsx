@@ -71,19 +71,12 @@ function AppLayout() {
                     justifyContent: 'space-between'
                 }} >
                     <SearchInput />
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}>
-                        <Space size={5} wrap>
-                            <Avatar icon={<BellOutlined />} />
-                            <Avatar icon={<UserOutlined />} />
-                            <p>User name</p>
-                            <Button type="primary" shape="circle" style={{ backgroundColor: '#fb9835' }}>
-                                <UserAddOutlined />
-                            </Button>
-                        </Space>
-                    </div>
+                    <Space size={5} wrap>
+                        <Avatar icon={<BellOutlined />} />
+                        <Avatar icon={<UserOutlined />} />
+                        <p>User name</p>
+                        <Button type="primary" shape="circle" style={{ backgroundColor: '#fb9835' }} icon={<UserAddOutlined />} />
+                    </Space>
                 </Header>
                 <Content style={{
                     margin: '20px 10px',
