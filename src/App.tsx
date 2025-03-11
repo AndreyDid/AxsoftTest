@@ -10,8 +10,6 @@ function App() {
             borderColor: '#ebebeb',
             headerBg: '#fafafa',
             headerBorderRadius: 10,
-            cellPaddingBlock: 5,
-            cellPaddingInlineMD: 1
           },
           Modal: {
             colorBgMask: 'rgba(59, 58, 58, 0.69)',
