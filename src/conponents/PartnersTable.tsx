@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Flex, Modal, Space, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 import ModalComponent from './ModalComponent';
@@ -31,6 +31,7 @@ const filterColumn = <T extends Data>(arr: T[], key: keyof T): { text: string, v
 function PartnersTable() {
     const [selectedPartner, setSelectedPartner] = useState<IPartner | null>(null);
     const [open, setOpen] = useState(false);
+    const [modal, contextHolder] = Modal.useModal();
 
     let itemsCount = 0
     const { data: parntersData, isLoading } = partnerAPI.useGetAllPartnersQuery(itemsCount)
@@ -38,7 +39,7 @@ function PartnersTable() {
     const partnersDataKey = parntersData?.data.map(item => ({ ...item, key: item.id })) || []
 
     const [createPartner, { isLoading: isCreateLoading }] = partnerAPI.useCreatePartnerMutation()
-    const [updatePartner] = partnerAPI.useUpdatePartnerMutation()
+    const [updatePartner, { error: updateError }] = partnerAPI.useUpdatePartnerMutation()
     const [deletePartner] = partnerAPI.useDeletePartnerMutation()
 
     const handleRemove = (partner: IPartner) => {
@@ -50,6 +51,16 @@ function PartnersTable() {
             }
         })
     }
+
+    useEffect(() => {
+        if (updateError) {
+            const errorMessage = updateError.data?.errors?.INN?.[0]
+            modal.error({
+                title: 'ОШИБКА',
+                content: <p>{errorMessage}</p>
+            })
+        }
+    }, [updateError])
 
     const handleUpdate = (partner: IPartner) => {
         setSelectedPartner(partner);
@@ -108,6 +119,7 @@ function PartnersTable() {
 
     return (
         <>
+            {contextHolder}
             <div style={{ margin: '10px 20px' }}>
                 <Button type="primary" onClick={() => setOpen(true)}>
                     Добавить контрагента
