@@ -31,12 +31,12 @@ function ModalComponent({ setOpen, open, createPartner, isCreateLoading, selecte
     const legalEntitySchema = z.discriminatedUnion('hasLegalEntity', [
         z.object({
             hasLegalEntity: z.literal(true),
-            inn: z.string().min(10, 'ИНН должен содержать 10 символов').max(10, 'Слишком длинный ИНН'),
+            inn: z.string().min(10, 'ИНН должен содержать 10 цифр').max(10, 'Слишком длинный ИНН'),
             kpp: z.string().min(9, 'КПП должен содержать 9 цифр').max(9, 'Слишком длинный КПП')
         }),
         z.object({
             hasLegalEntity: z.literal(false),
-            inn: z.string().min(12, 'ИНН должен содержать 12 символов').max(12, 'Слишком длинный ИНН'),
+            inn: z.string().min(12, 'ИНН должен содержать 12 цифр').max(12, 'Слишком длинный ИНН'),
             kpp: z.string().or(z.literal(''))
         }),
     ])
