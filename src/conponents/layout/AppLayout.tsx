@@ -6,7 +6,7 @@ import {
     UserAddOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Avatar, Button, Layout, Menu, Space } from 'antd';
+import { App, Avatar, Button, Layout, Menu, Space } from 'antd';
 import Logo from '../../assets/logo.png'
 import SearchInput from './SearchInput';
 import PartnersTable from '../PartnersTable';
@@ -54,44 +54,52 @@ function AppLayout() {
     const [collapsed, setCollapsed] = useState(false);
 
     return (
-        <Layout style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
-            <Sider theme='light' collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-                <div style={{ margin: '15px' }}>
-                    <img src={Logo} alt="Axsoft Development" height={collapsed ? '15px' : '30px'} style={{ transition: 'all 0.2s ease-in-out' }} />
-                </div>
-                <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
-            </Sider>
-            <Layout style={{ margin: '0 10px' }}>
-                <Header style={{
-                    padding: 0,
-                    background: '#f5f5f5',
-                    borderBottom: '2px solid #e6e6e8',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                }} >
-                    <SearchInput />
-                    <Space size={5} wrap>
-                        <Avatar icon={<BellOutlined />} />
-                        <Avatar icon={<UserOutlined />} />
-                        <p>User name</p>
-                        <Button type="primary" shape="circle" style={{ backgroundColor: '#fb9835' }} icon={<UserAddOutlined />} />
-                    </Space>
-                </Header>
-                <Content style={{
-                    margin: '20px 10px',
-                    minHeight: 360,
-                    background: '#ffffff',
-                    borderRadius: '5px',
-                    boxShadow: '0px 0px 5px 0px rgba(99, 95, 95, 0.38) '
-                }}>
-                    <div style={{ borderBottom: '1px solid #e1e1e3' }}>
-                        <h3 style={{ margin: 15 }}>Контрагенты</h3>
+        <App>
+            <Layout style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+                <Sider
+
+                    theme='light'
+                    collapsible
+                    collapsed={collapsed}
+                    onCollapse={(value) => setCollapsed(value)}
+                >
+                    <div style={{ margin: '15px' }}>
+                        <img src={Logo} alt="Axsoft Development" height={collapsed ? '15px' : '30px'} style={{ transition: 'all 0.2s ease-in-out' }} />
                     </div>
-                    <PartnersTable />
-                </Content>
+                    <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
+                </Sider>
+                <Layout style={{ margin: '0 10px' }}>
+                    <Header style={{
+                        padding: 0,
+                        background: '#f5f5f5',
+                        borderBottom: '2px solid #e6e6e8',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }} >
+                        <SearchInput />
+                        <Space size={5} wrap>
+                            <Avatar icon={<BellOutlined />} />
+                            <Avatar icon={<UserOutlined />} />
+                            <p>User name</p>
+                            <Button type="primary" shape="circle" style={{ backgroundColor: '#fb9835' }} icon={<UserAddOutlined />} />
+                        </Space>
+                    </Header>
+                    <Content style={{
+                        margin: '20px 10px',
+                        minHeight: 360,
+                        background: '#ffffff',
+                        borderRadius: '5px',
+                        boxShadow: '0px 0px 5px 0px rgba(99, 95, 95, 0.38) '
+                    }}>
+                        <div style={{ borderBottom: '1px solid #e1e1e3' }}>
+                            <h3 style={{ margin: 15 }}>Контрагенты</h3>
+                        </div>
+                        <PartnersTable />
+                    </Content>
+                </Layout>
             </Layout>
-        </Layout>
+        </App>
     );
 };
 

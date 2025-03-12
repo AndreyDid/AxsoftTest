@@ -7,8 +7,8 @@ import {
     EditOutlined,
     DeleteOutlined
 } from '@ant-design/icons';
-import { partnerAPI } from '../services/PartnerSevice';
-import { IPartner } from '../interfaces/IPartner';
+import { IPartner, partnerAPI } from '../services/PartnerSevice';
+
 
 type Data = {
     id: string
@@ -31,11 +31,9 @@ const filterColumn = <T extends Data>(arr: T[], key: keyof T): { text: string, v
 function PartnersTable() {
     const [selectedPartner, setSelectedPartner] = useState<IPartner | null>(null);
     const [open, setOpen] = useState(false);
-    const [modal, contextHolder] = Modal.useModal();
-
-    let itemsCount = 0
-    const { data: parntersData, isLoading } = partnerAPI.useGetAllPartnersQuery(itemsCount)
-    itemsCount = parntersData?.metaData.itemsCount ?? 0
+    // let itemsCount = 0
+    const { data: parntersData, isLoading, } = partnerAPI.useGetAllPartnersQuery(50)
+    // itemsCount = parntersData?.metaData.itemsCount ?? 0
     const partnersDataKey = parntersData?.data.map(item => ({ ...item, key: item.id })) || []
 
     const [createPartner, { isLoading: isCreateLoading }] = partnerAPI.useCreatePartnerMutation()
@@ -54,10 +52,9 @@ function PartnersTable() {
 
     useEffect(() => {
         if (updateError) {
-            const errorMessage = updateError.data?.errors?.INN?.[0]
-            modal.error({
+            Modal.error({
                 title: 'ОШИБКА',
-                content: <p>{errorMessage}</p>
+                content: <p>{updateError}</p>
             })
         }
     }, [updateError])
@@ -119,7 +116,6 @@ function PartnersTable() {
 
     return (
         <>
-            {contextHolder}
             <div style={{ margin: '10px 20px' }}>
                 <Button type="primary" onClick={() => setOpen(true)}>
                     Добавить контрагента
@@ -137,6 +133,7 @@ function PartnersTable() {
                 )}
             </div>
             <Table<IPartner>
+                pagination={{ hideOnSinglePage: true }}
                 bordered
                 size='small'
                 loading={isLoading}

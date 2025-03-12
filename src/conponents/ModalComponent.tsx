@@ -4,16 +4,15 @@ import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import TextArea from 'antd/es/input/TextArea';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IPartner } from '../interfaces/IPartner';
+import { IPartner } from '../services/PartnerSevice';
 
 interface ModalProps {
     setOpen: (open: boolean) => void,
-    setPartners: React.Dispatch<React.SetStateAction<IPartner[]>>,
+    open: boolean,
+    isCreateLoading: boolean,
+    selectedPartner: IPartner | null,
     createPartner: (partner: Omit<IPartner, 'id'>) => void,
     updatePartner: (partner: IPartner) => void,
-    isCreateLoading: boolean,
-    open: boolean,
-    selectedPartner: IPartner | null,
     setSelectedPartner: (selectedTartner: IPartner | null) => void
 }
 
@@ -125,8 +124,8 @@ function ModalComponent({ setOpen, open, createPartner, isCreateLoading, selecte
                                     setPosition(e.target.value)
                                 )}
                             >
-                                <Radio.Button {...field} value="start">Физ.лицо</Radio.Button>
-                                <Radio.Button {...field} value="end">Юр.лицо</Radio.Button>
+                                <Radio.Button value="start">Физ.лицо</Radio.Button>
+                                <Radio.Button value="end">Юр.лицо</Radio.Button>
                             </Radio.Group>
                         )}
                     />
