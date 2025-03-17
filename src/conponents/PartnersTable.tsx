@@ -1,23 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Button, Flex, Modal, Space, Table } from 'antd';
-import type { TableColumnsType } from 'antd';
+import { partnerAPI } from '../services/PartnerSevice';
+import { Partner } from './models/Partner';
+import { partnerFilterColumn } from '../utils/PartnerFilterColunm';
 import ModalComponent from './ModalComponent';
-
+import type { TableColumnsType } from 'antd';
 import {
     EditOutlined,
     DeleteOutlined
 } from '@ant-design/icons';
-import { partnerAPI } from '../services/PartnerSevice';
-import { Partner } from './models/Partner';
-
-const filterColumn = <T extends Partner>(arr: T[], key: keyof T): { text: string, value: string }[] => {
-    if (!arr || arr.length === 0) return []
-    const uniqueValues = [...new Set(arr.map(item => String(item[key])))]
-    return uniqueValues.map(value => ({
-        text: String(value),
-        value: String(value)
-    }))
-}
 
 function PartnersTable() {
     const [selectedPartner, setSelectedPartner] = useState<Partner>();
@@ -60,7 +51,7 @@ function PartnersTable() {
             title: 'Наименование',
             dataIndex: 'name',
             key: 'name',
-            filters: filterColumn(partnersDataKey, 'name'),
+            filters: partnerFilterColumn(partnersDataKey, 'name'),
             filterMode: 'tree',
             filterSearch: true,
             onFilter: (value, record) => record.name.startsWith(value as string),
@@ -70,7 +61,7 @@ function PartnersTable() {
             title: 'Группа',
             dataIndex: 'group',
             key: 'group',
-            filters: filterColumn(partnersDataKey, 'group'),
+            filters: partnerFilterColumn(partnersDataKey, 'group'),
             onFilter: (value, record) => record.group.startsWith(value as string),
             width: '20%',
         },
@@ -78,7 +69,7 @@ function PartnersTable() {
             title: 'ИНН',
             dataIndex: 'inn',
             key: 'inn',
-            filters: filterColumn(partnersDataKey, 'inn'),
+            filters: partnerFilterColumn(partnersDataKey, 'inn'),
             onFilter: (value, record) => record.inn.startsWith(value as string),
             filterSearch: true,
             width: '20%',
