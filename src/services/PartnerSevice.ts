@@ -1,39 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IPartnerUpdateResponceError } from "../interfaces/IPartnerUpdateError";
-import { z } from "zod";
+import { MetaData, Partner, PartnersResponseSchema } from "../conponents/models/Partner";
 
 const BASE_URL = 'http://localhost:5000'
-
-export const PartnerSchema = z.object({
-    id: z.string().uuid(), // UUID
-    name: z.string(),
-    inn: z.string().min(10).max(12),
-    kpp: z.string().min(9).max(9).or(z.literal('')),
-    group: z.string(),
-    description: z.string().nullable()
-});
-
-export const MetaDataSchema = z.object({
-    itemsCount: z.number(),
-    pageCount: z.number(),
-    pageNumber: z.number(),
-    pageSize: z.number()
-})
-
-export const PartnersResponseSchema = z.object({
-    data: z.array(PartnerSchema),
-    metaData: MetaDataSchema
-});
-
-export type IPartner = z.infer<typeof PartnerSchema>
-export type IPartnersResponse = z.infer<typeof PartnersResponseSchema>
-export type IMetaData = z.infer<typeof MetaDataSchema>
 
 export const partnerAPI = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1` }),
     tagTypes: ['Partner'],
     endpoints: (build) => ({
-        getAllPartners: build.query<{ data: IPartner[], metaData: IMetaData }, number>({
+        getAllPartners: build.query<{ data: Partner[], metaData: MetaData }, number>({
             query: (size: number = 10, number: number = 1) => ({
                 url: '/partners',
                 params: {
@@ -54,7 +29,7 @@ export const partnerAPI = createApi({
             },
             providesTags: () => ['Partner']
         }),
-        createPartner: build.mutation<IPartner, Omit<IPartner, 'id'>>({
+        createPartner: build.mutation<Partner, Omit<Partner, 'id'>>({
             query: (partner) => ({
                 url: '/partners',
                 method: 'POST',
@@ -62,7 +37,7 @@ export const partnerAPI = createApi({
             }),
             invalidatesTags: ['Partner']
         }),
-        updatePartner: build.mutation<IPartner, IPartner>({
+        updatePartner: build.mutation<Partner, Partner>({
             query: (partner) => ({
                 url: `/partners/${partner.id}`,
                 method: 'PUT',
@@ -73,7 +48,7 @@ export const partnerAPI = createApi({
             },
             invalidatesTags: ['Partner']
         }),
-        deletePartner: build.mutation<IPartner, IPartner>({
+        deletePartner: build.mutation<Partner, Partner>({
             query: (partner) => ({
                 url: `/partners/${partner.id}`,
                 method: 'DELETE',

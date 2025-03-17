@@ -4,16 +4,16 @@ import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import TextArea from 'antd/es/input/TextArea';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IPartner } from '../services/PartnerSevice';
+import { Partner } from './models/Partner';
 
 interface ModalProps {
     setOpen: (open: boolean) => void,
     open: boolean,
     isCreateLoading: boolean,
-    selectedPartner: IPartner | null,
-    createPartner: (partner: Omit<IPartner, 'id'>) => void,
-    updatePartner: (partner: IPartner) => void,
-    setSelectedPartner: (selectedTartner: IPartner | null) => void
+    selectedPartner: Partner | undefined,
+    createPartner: (partner: Omit<Partner, 'id'>) => void,
+    updatePartner: (partner: Partner) => void,
+    setSelectedPartner: (selectedPartner: Partner | undefined) => void
 }
 
 const groupData = [
@@ -85,7 +85,7 @@ function ModalComponent({ setOpen, open, createPartner, isCreateLoading, selecte
     const handleOk: SubmitHandler<FormValues> = async (data: FormValues) => {
         if (selectedPartner) {
             await updatePartner({ ...selectedPartner, ...data })
-            setSelectedPartner(null)
+            setSelectedPartner(undefined)
         } else {
             await createPartner(data)
         }
@@ -94,7 +94,7 @@ function ModalComponent({ setOpen, open, createPartner, isCreateLoading, selecte
     };
 
     const handleCancel = () => {
-        setSelectedPartner(null)
+        setSelectedPartner(undefined)
         setOpen(false);
     };
 

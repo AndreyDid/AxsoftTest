@@ -7,19 +7,10 @@ import {
     EditOutlined,
     DeleteOutlined
 } from '@ant-design/icons';
-import { IPartner, partnerAPI } from '../services/PartnerSevice';
+import { partnerAPI } from '../services/PartnerSevice';
+import { Partner } from './models/Partner';
 
-
-type Data = {
-    id: string
-    name: string
-    inn: string
-    kpp: string
-    group: string
-    description: null | string
-}
-
-const filterColumn = <T extends Data>(arr: T[], key: keyof T): { text: string, value: string }[] => {
+const filterColumn = <T extends Partner>(arr: T[], key: keyof T): { text: string, value: string }[] => {
     if (!arr || arr.length === 0) return []
     const uniqueValues = [...new Set(arr.map(item => String(item[key])))]
     return uniqueValues.map(value => ({
@@ -29,7 +20,7 @@ const filterColumn = <T extends Data>(arr: T[], key: keyof T): { text: string, v
 }
 
 function PartnersTable() {
-    const [selectedPartner, setSelectedPartner] = useState<IPartner | null>(null);
+    const [selectedPartner, setSelectedPartner] = useState<Partner>();
     const [open, setOpen] = useState(false);
     // let itemsCount = 0
     const { data: parntersData, isLoading, } = partnerAPI.useGetAllPartnersQuery(50)
@@ -40,7 +31,7 @@ function PartnersTable() {
     const [updatePartner, { error: updateError }] = partnerAPI.useUpdatePartnerMutation()
     const [deletePartner] = partnerAPI.useDeletePartnerMutation()
 
-    const handleRemove = (partner: IPartner) => {
+    const handleRemove = (partner: Partner) => {
         Modal.confirm({
             centered: true,
             title: 'Удалить запись?',
@@ -59,12 +50,12 @@ function PartnersTable() {
         }
     }, [updateError])
 
-    const handleUpdate = (partner: IPartner) => {
+    const handleUpdate = (partner: Partner) => {
         setSelectedPartner(partner);
         setOpen(true)
     }
 
-    const columns: TableColumnsType<IPartner> = [
+    const columns: TableColumnsType<Partner> = [
         {
             title: 'Наименование',
             dataIndex: 'name',
@@ -132,7 +123,7 @@ function PartnersTable() {
                     />
                 )}
             </div>
-            <Table<IPartner>
+            <Table<Partner>
                 pagination={{ hideOnSinglePage: true }}
                 bordered
                 size='small'
